@@ -188,8 +188,9 @@ def process(pdf_path: Path):
         pdf_dest = pdf_folder / pdf_path.name
         note_path = dest_folder / f"{safe_filename(data['title'])}.md"
 
-        shutil.move(str(pdf_path), str(pdf_dest))
+        # Write note first — if this fails, PDF stays in Downloads and can be retried
         note_path.write_text(build_note(data, pdf_dest, date))
+        shutil.move(str(pdf_path), str(pdf_dest))
         mark_processed(pdf_path)
 
         labels = {

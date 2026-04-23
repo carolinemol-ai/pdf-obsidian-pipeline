@@ -6,7 +6,7 @@ PROCESSOR="$HOME/.claude/scripts/pdf-processor.py"
 
 echo "[$(date)] PDF watcher started — watching $DOWNLOADS"
 
-/opt/homebrew/bin/fswatch "$DOWNLOADS" | while read filepath; do
+/opt/homebrew/bin/fswatch --event Created "$DOWNLOADS" | while read filepath; do
     if [[ "$filepath" == *.pdf || "$filepath" == *.PDF ]]; then
         echo "[$(date)] New PDF detected: $filepath"
         /usr/local/bin/python3 "$PROCESSOR" "$filepath" &
